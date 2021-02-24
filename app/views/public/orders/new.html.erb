@@ -1,0 +1,75 @@
+<div class="container mt-5">
+	<div class="row">
+  	<div class="col-md-8">
+			<div class="mb-4">
+				<h4>注文情報入力</h4>
+			</div>
+
+			<%= form_with(model: @order, local: true, url: {action: 'confirm'}) do |f| %>
+
+			<!--支払い方法-->
+			<h5 class="mt-2">支払方法</h5>
+			<div class="ml-3">
+				<%= f.radio_button :payment_method, :"0", checked: true %>
+				<%= f.label :payment_method, "クレジットカード", value: :クレジットカード %>
+			</div>
+			<div class="ml-3">
+				<%= f.radio_button :payment_method, :"1" %>
+				<%= f.label :payment_method, "銀行振込", value: :銀行振込 %>
+			</div>
+
+			<!--お届け先-->
+			<h5 class="mt-3">お届け先</h5>
+				<!--自分の住所-->
+			<div class="ml-3">
+				<%= f.radio_button :select_address, :customer_address, checked: true %>
+				<%= f.label :select_address, "ご自身の住所", value: :customer_address %>
+				<div class="ml-3" style="width:200px">
+					〒<%= @customer.postcode %>
+				  <%= @customer.address %><br>
+					<%= @customer.last_name %><%= @customer.first_name %>
+				</div>
+			</div>
+
+				<!--登録済住所-->
+			<div class="ml-3 mt-3">
+				<%= f.radio_button :select_address, :deliverey_address %>
+				<%= f.label :select_address, "登録済住所から選択", value: :deliverey_address %>
+				<div class="ml-3">
+					<%= collection_select(:select_delivery, :id, current_customer.deliveries, :id, :total_address ) %>
+				</div>
+			</div>
+
+				<!--新しいお届け先-->
+			<div class="ml-3 mt-3">
+				<%= f.radio_button :select_address, :new_deliverey_address %>
+				<%= f.label :select_address, "新しいお届け先", value: :new_deliverey_address %>
+				<div class="form ml-3">
+					<div class="form-row">
+						<%= f.label :new_postcode, "郵便番号（ハイフンなし）", class:"col-sm-5 col-lg-4 col-form-label" %>
+						<div class="form-group col-sm-6 col-lg-4">
+							<%= f.text_field :new_postcode, autofocus: true, :placeholder => "半角数字、ハイフンなし", class:"form-control" %>
+						</div>
+					</div>
+
+					<div class="form-row">
+						<%= f.label :new_address, "住所", class:"col-sm-5 col-lg-4 col-form-label" %>
+						<div class="form-group col-sm-7 col-lg-6">
+							<%= f.text_field :new_address, autofocus: true, :placeholder => "東京都千代田区永田町1丁目7-1", :size=>"40x10", class:"form-control" %>
+						</div>
+					</div>
+
+					<div class="form-row">
+						<%= f.label :new_name, "宛名", class:"col-sm-5 col-lg-4 col-form-label" %>
+						<div class="form-group col-sm-6 col-lg-4">
+							<%= f.text_field :new_name, autofocus: true, :placeholder => "令和道子", class:"form-control" %>
+						</div>
+					</div>
+				</div>
+			</div>
+			<%= f.submit "確認画面へ進む", class: "btn btn-primary col-xs-2 col-xs-offset-5 ml-3" %>
+			<% end %>
+		</div>
+
+	</div>
+</div>

@@ -1,0 +1,23 @@
+<div class="container mx-auto mt-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">
+    <%= attachment_image_tag @item, :image, format: 'jpeg', size: "225x175" %>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-4">
+      <h4><%= @item.name %></h4><br>
+      <p><%= @item.information %></p>
+      <div class="tax_price mt-5">
+        <h5>￥<%= addTax(@item.price).to_s(:delimited) %></h5>
+        <p class="tax_word">  (税込)</p>
+      </div>
+      <div class="amount_form">
+        <%= form_with model:@cart_item, url: cart_items_path, method: :post, local: true do |f| %>
+          <%#= f.select :amount, options_for_select(@amounts_array, selected: @amounts_array[0], disabled: @amounts_array[0]) %>
+          <%= f.select :amount, options_for_select((1..10).to_a) , include_blank: "個数選択", selected: 1 %>
+          <%= f.hidden_field :item_id, value: @item.id %>
+          <%= f.submit 'カートに入れる', class: 'btn btn-success btn-sm ml-5'  %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

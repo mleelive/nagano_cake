@@ -1,0 +1,47 @@
+<div class="container">
+  <div class="row my-5">
+    <div class="col">
+     <h3 class="bg-light text-center" style="width:150px">商品編集</h4>
+     
+　     <%= form_with model: [:admin, @item], local:true do |f| %>
+          <div class="field">
+            <label class="col-sm-2">画像投稿</label>
+              <%= f.attachment_field :image %>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-2">商品名</label>
+              <%= f.text_field :name %>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-2">商品説明</label>
+              <%= f.text_area :information %>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-2">ジャンル</label>
+              <%= f.collection_select :category_id, Category.all, :id, :name, {prompt: '選択してください'} %>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-2">税抜価格</label>
+              <%= f.text_field :price %>円
+          </div>
+
+         <div class="form-group">
+           <label class="col-sm-2">販売ステータス</label>
+             <%= f.radio_button :is_active, :true, checked: true %>
+             <%= f.label :販売中 %>
+             <%= f.radio_button :is_active, :false %>
+             <%= f.label :販売停止中 %>
+         </div>
+
+         <div class="actions">
+           <label class="col-sm-2"></label>
+             <%= f.submit "変更を保存", class:"btn btn-success" %>
+         </div>
+       <% end %>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,61 @@
+<div class='container'>
+  <div class='row mt-5'>
+    <div class='col'>
+     <h3 class="text-center" style="width:200px" >注文履歴一覧</h3>
+
+     <table class="table mt-5">
+       <thead class="thead-light">
+        <tr>
+          <th>購入日時</th>
+          <th>購入者</th>
+          <th>注文個数</th>
+          <th>ステータス</th>
+        </tr>
+        <% if @customer_orders.empty? %>
+        <%# binding.pry %>
+          <% if @customer.presence %>
+          <% else %>
+            <% @orders.each do |order| %>
+            <tr>
+              <td>
+                <%= link_to admin_order_path(order) do %>
+                <%= order.created_at.to_s(:datetime_jp) %>
+                <% end %>
+              </td>
+              <td><%= order.customer.full_name %></td>
+                <% @sum = 0 %>
+              <td><% order.order_items.each do |order_item| %>
+                <% @sum += order_item.amount %>
+                <% end %>
+                <%= @sum %>
+              </td>
+              <td><%= order.status %></td>
+            </tr>
+          <% end %>
+       <% end %>
+      <% else %>
+        <% @customer_orders.each do |order| %>
+      <tr>
+        <td>
+          <%= link_to admin_order_path(order) do %>
+          <%= order.created_at.to_s(:datetime_jp) %>
+          <% end %>
+        </td>
+        <td><%= order.customer.full_name %></td>
+          <% @sum = 0 %>
+        <td><% order.order_items.each do |order_item| %>
+            <% @sum += order_item.amount %>
+            <% end %>
+            <%= @sum %>
+        <td><%= order.status %></td>
+      </tr>
+       <% end %>
+       <% end %>
+     </table>
+   </div>
+  </div>
+</div>
+
+<div class="container page">
+  <%= paginate @orders %>
+</div>

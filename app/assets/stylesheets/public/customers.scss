@@ -1,0 +1,17 @@
+// Place all the styles related to the public/customers controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.flex {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.flex p {
+  margin-right: 20px;
+  font-weight: bold;
+}

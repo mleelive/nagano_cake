@@ -1,0 +1,45 @@
+<div class="container">
+  <div class="row mt-5">
+    <div class="col">
+      <h4 class="text-center" style="width:150px">商品詳細</h4>
+
+        <div class="row">
+         <div class="col mt-5">
+          <%= attachment_image_tag(@item, :image, :fill, 300, 200, fallback:"no_image.jpg") %>
+        </div>
+
+        <div class="col">
+           <div class="form-group">
+            <h5>商品名<%= @item.name %></h5>
+           </div>
+
+           <div class="form-group">
+            <h5>商品説明 <p class="ml-5"><%= @item.information %></p></h5>
+           </div>
+
+           <div class="form-group">
+            <h5>ジャンル  <p class="ml-5"><%= @item.category.name %></p></h5>
+           </div>
+
+           <div class="form-group">
+            <h5>税込価格(税抜価格) <p class="ml-5"><%= addTax(@item.price).to_s(:delimited)%>(<%= @item.price.to_s(:delimited) %>)円</p></h5>
+           </div>
+
+           <div class="form-group">
+            <h5>販売ステータス
+            <% if @item.is_active == true %>
+  		        <p class="ml-5 text-success">販売中</p>
+  		      <% else %>
+  		        <p class="ml-5 text-secondary">販売停止中</p>
+  		      <% end %>
+  		     </h5>
+  		    </div>
+
+  		   <div class="actions">
+  		     <%= link_to "編集する", edit_admin_item_path(@item), class:"btn btn-success" %>
+  		   </div>
+
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,52 @@
+<div class="container mt-5">
+ <div class="row justify-content-between">
+      <h4 class="text-center" style="width:150px" >商品一覧</h4>
+  <div style="position:absolute; top: 220px; right: 350px;">
+	   <%= link_to new_admin_item_path do %>
+		  <div class="fas fa-plus-circle fa-3x"></div>
+	   <% end %>
+	  </div>
+  </div>
+
+  <div class='row'>
+    <div class='col'>
+       <table class="table mt-5">
+        <thead class="thead-light">
+         <tr class="table-light">
+           <th>商品ID</th>
+           <th>商品名</th>
+           <th>税抜価格</th>
+           <th>ジャンル</th>
+           <th>ステータス</th>
+         </tr>
+        </thead>
+        <tbody>
+        <% @items.each do |item| %>
+         <tr>
+           <td><%= item.id %></td>
+           <td>
+             <%= link_to admin_item_path(item.id) do %>
+             <%= item.name %>
+             <% end %>
+           </td>
+           <td><%= item.price.to_s(:delimited) %></td>
+           <td><%= item.category.name %></td>
+           <td>
+           <% if item.is_active? %>
+            <p class="text-success">販売中</p>
+           <% else %>
+            <p class="text-secondary">販売停止中</p>
+           <% end %>
+          </td>
+        </tr>
+       <% end %>
+       </tbody>
+     </table>
+   </div>
+  </div>
+</div>
+
+<div class="container page">
+  <%= paginate @items %>
+</div>
+

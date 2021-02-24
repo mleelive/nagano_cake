@@ -1,0 +1,60 @@
+<div class="container mt-5">
+  <div class="row">
+    <h4 class="cart_head mb-3">ショッピングカート</h4>
+    <div class="destroy_all_btn mr-1 mb-3">
+      <%= link_to 'カートを空にする', cart_items_destroy_all_path, class: 'btn btn-danger btn-sm', method: :delete %>
+    </div>
+    <table class="table table-bordered">
+      <thead class="table-secondary">
+        <tr>
+          <th style="width: 40%">商品名</th>
+          <th style="width: 15%">単価(税込)</th>
+          <th style="width: 15%">数量</th>
+          <th style="width: 15%">小計</th>
+          <th style="width: 15%"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @sum = 0 %>
+        <% @cart_items.each do |cart_item| %>
+        <tr>
+          <td class="item_name_td">
+            <div class="item_image"><%= attachment_image_tag cart_item.item, :image, format: 'jpeg', size: "75x50" %></div>
+            <p class="item_name ml-3 pt-2"><%= cart_item.item.name %>
+          </td>
+          <td><%= addTax(cart_item.item.price).to_s(:delimited) %></td>
+          <td>
+            <%= form_with model: cart_item, method: :patch, local: true do |f| %>
+            <%= f.select :amount, options_for_select(((1..99).to_a), :selected => cart_item.amount) %>
+            <%= f.submit '変更', class: 'btn btn-success btn-sm' %>
+            <% end %>
+          </td>
+          <td>
+            <%= cart_item.sub_total_price.to_s(:delimited) %>
+          </td>
+          <td>
+            <%= link_to '削除する', cart_item_path(cart_item), class: 'btn btn-danger btn-sm', method: :delete %>
+          </td>
+        </tr>
+        <% @sum += cart_item.sub_total_price %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="row">
+    <div class="btn_shopping">
+      <%= link_to '買い物を続ける', root_path, class: 'btn btn-primary' %>
+    </div>
+    <table class="table table-bordered total_table" style="width:25%">
+      <tr>
+        <td class="table-secondary">合計金額</td>
+        <td><%= @sum.to_s(:delimited) %></td>
+      </tr>
+    </table>
+  </div>
+  <div class="row">
+    <div class="btn_order">
+      <%= link_to '情報入力に進む', new_order_path, class: 'btn btn-success mb-5' %>
+    </div>
+  </div>
+</div>

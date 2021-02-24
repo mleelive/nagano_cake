@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="row mt-5">
+	 <div class="col-lg-6">
+
+    <h4 class="text-center" style="width:150px">ジャンル編集</h4>
+      <%= form_with model: [:admin, @category], local:true do |f| %>
+        <table class="table mt-5">
+          <tr>
+           <th>ジャンル名</th>
+           <th><%= f.text_field :name, class:"form-control" %></th>
+           <th><%= f.submit "変更を保存", class: "btn btn-success" %></th>
+          </tr>
+        </table>
+     <% end %>
+    </div>
+   </div>
+</div>

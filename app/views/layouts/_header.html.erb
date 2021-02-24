@@ -1,0 +1,118 @@
+ <header>
+    <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <!--<a class="navbar-brand text-dark" href="/" >NAGANOCAKE</a>-->
+      <a href="/">
+      <!--<img src="assets/logo.jpg" class="logo-img mr-2">-->
+      <%= image_tag 'logo.jpg', class:"logo-img mr-2" %>
+      </a>
+      <% if customer_signed_in? %>
+        <li class="list-unstyled">ようこそ、<%= current_customer.last_name.to_s + " " +current_customer.first_name.to_s %>さん！</li>
+      <% end %>
+      <!-- adminログイン後ヘッダー -->
+      <ul class="navbar-nav ml-auto">
+      <% if admin_signed_in? %>
+        <nav>
+         <ul class="navbar-nav">
+            <li>
+              <%= link_to admin_items_path, class: 'nav-link text-dark' do %>
+                <i class="fas fa-birthday-cake"></i>
+                商品一覧
+              <% end %>
+            </li>
+            <li>
+              <%= link_to admin_customers_path, class: 'nav-link text-dark' do %>
+              <i class="fas fa-users"></i>
+              会員一覧
+              <% end %>
+            </li>
+            <li>
+              <%= link_to admin_root_path, class: 'nav-link text-dark' do %>
+                <i class="fas fa-shopping-cart"></i>
+                注文履歴
+              <% end %>
+            </li>
+            <li>
+              <%= link_to new_admin_category_path, class: 'nav-link text-dark' do %>
+                <i class="fas fa-caret-down"></i>
+                ジャンル一覧
+              <% end %>
+            </li>
+            <li>
+              <%= link_to destroy_admin_session_path, method: :delete, class: 'nav-link text-dark' do %>
+                <i class="fas fa-sign-out-alt"></i>
+                ログアウト
+              <% end %>
+            </li>
+
+
+          </ul>
+        </nav>
+
+      <!-- カスタマーログイン後 -->
+      <% elsif customer_signed_in? %>
+        <nav>
+          <ul class="navbar-nav">
+            <li>
+              <%= link_to customer_path(current_customer), class: 'nav-link text-dark' do %>
+                <i class="fas fa-house-user"></i>
+                My Page
+              <% end %>
+            </li>
+            <li>
+              <%= link_to items_path, class: 'nav-link text-dark' do %>
+                <i class="fas fa-birthday-cake"></i>
+                Line Up
+              <% end %>
+            </li>
+            <li>
+              <%= link_to cart_items_path, class: 'nav-link text-dark' do %>
+                <i class="fas fa-cart-plus"></i>
+                Cart
+              <% end %>
+            </li>
+            <li>
+              <%= link_to destroy_customer_session_path, method: :delete, class: 'nav-link text-dark' do %>
+                <i class="fas fa-sign-out-alt"></i>
+                Sign Out
+              <% end %>
+            </li>
+          </ul>
+        </nav>
+      <% else %>
+         <!-- admin、customerログイン前 -->
+        <nav>
+          <ul class="navbar-nav">
+            <li>
+              <%= link_to about_path, class: 'nav-link text-dark' do %>
+                <i class="fas fa-laptop-house"></i>
+                About
+              <% end %>
+            </li>
+            <li>
+              <%= link_to items_path, class: 'nav-link text-dark' do %>
+                <i class="fas fa-birthday-cake"></i>
+                Line Up
+              <% end %>
+            </li>
+            <li>
+              <%= link_to new_customer_registration_path, class: 'nav-link text-dark' do %>
+                <i class="fas fa-user-plus"></i>
+                Sign Up
+              <% end %>
+            </li>
+            <li>
+              <%= link_to new_customer_session_path, class: 'nav-link text-dark' do %>
+                <i class="fas fa-sign-in-alt"></i>
+                Sign In
+              <% end %>
+            </li>
+          </ul>
+        </nav>
+      <% end %>
+      </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="header-bottom"></div>

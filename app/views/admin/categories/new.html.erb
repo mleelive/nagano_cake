@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="row mt-5">
+	<div class="col-lg-5">
+
+    <h4 class="text-center" style="width:250px">ジャンル一覧・追加</h4>
+
+      <%= form_with model: [:admin, @category], local:true do |f| %>
+      <%= render 'layouts/error_messages', model: f.object %>
+        <table class="table mt-5">
+          <tr>
+            <th>ジャンル名</th>
+            <th><%= f.text_field :name, :placeholder => "ジャンル名", class:"form-control" %></th>
+            <th><%= f.submit "新規登録", class: "btn btn-success" %></th>
+          </tr>
+         </table>
+      <% end %>
+
+      <table class="table mt-5" >
+       <thead class="thead-light">
+        <tr>
+          <th>ジャンル</th>
+          <th></th>
+         </tr>
+       </thead>
+       <tbody>
+         <% @categories.each do |category| %>
+          <tr>
+            <td><%= category.name %></td>
+            <td><%= link_to "編集する", edit_admin_category_path(category), class: "btn btn-success ml-4" %></td>
+          </tr>
+         <% end %>
+       </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+

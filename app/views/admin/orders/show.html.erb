@@ -1,0 +1,90 @@
+<div class="container mt-5">
+  <div class="row">
+
+    <div class="col-xs-offset-1">
+ 	    <table class="table">
+	      <h4 class="mb-3">注文履歴詳細</h4>
+
+			   <tr>
+			  	 <th>購入者</th>
+			  	 <td><%= link_to @order.customer.full_name, admin_customer_path(@order.customer_id) %></td>
+			   </tr>
+
+			   <tr>
+			  	 <th>配送先</th>
+			  	 <td>〒<%= @order.postcode + " " + @order.address %></td>
+			   </tr>
+
+			   <tr>
+			  	 <th>支払い方法</th>
+			  	 <td>
+			  	   <% if @order.payment_method == 0 %>
+		           <p>クレジットカード</p>
+		  　      <% else %>
+		           <p>銀行振り込み</p>
+		         <% end %>
+		       </td>
+	       </tr>
+
+			   <tr>
+			  	 <th>注文ステータス</th>
+			  	 <td>
+			  	   <%#= form_for (@order), url: admin_order_path(@order), method: :patch do |f| %>
+			  	   <%= form_with :model => @order, url: admin_order_path(@order), method: :patch, local: true  do |f| %>
+			  	   <%= f.select :status, Order.statuses.keys.to_a %>
+			  	   <%= f.submit "更新" , class: "btn btn-primary btn-sm" %>
+	           <% end %>
+			  	 </td>
+			   </tr>
+	    </table>
+    </div>
+
+    <div class = "col-md-9">
+	    <table class="table">
+			  <thead class="thead-light">
+			  	<tr>
+			  	<th>商品名</th>
+			  	<th>単価（税込）</th>
+			  	<th>数量</th>
+			  	<th>小計</th>
+			  	<th>制作ステータス</th>
+			  	</tr>
+			  </thead>
+
+        <tbody>
+			  	<% @order_items.each do |order_item| %>
+			  	<%# @order.order_items.includes([:item])each do |order_item| %>
+				  <tr>
+				  	<td><%= order_item.item.name %></td>
+				  	<td><%= addTax(order_item.item.price).to_s(:delimited) %></td>
+				  	<td><%= order_item.amount %></td>
+				  	<td><%= addTax(order_item.item.price * order_item.amount).to_s(:delimited) %></td>
+				  	<td>
+				  		<%#= form_for (order_item), url: admin_order_item_path(order_item), method: :patch do |f| %>
+				  		<%= form_with :model => order_item, url: admin_order_item_path(order_item), method: :patch, local: true  do |f| %>
+				  	  <%= f.select :making_status, OrderItem.making_statuses.keys.to_a %>
+				  	  <%= f.submit "更新" , class: "btn btn-primary btn-sm" %>
+				  	  <% end %>
+				  	</td>
+				  </tr>
+				  <% end %>
+	      </tbody>
+	    </table>
+    </div>
+
+   <div class="col-md-3">
+  	<table class="table total-price">
+  	  <th class="col-xs-6">商品合計</th>
+  	  <td><%= (@total_price).to_s(:delimited) %>円</td>
+  	</tabale>
+  	<table class="table freight">
+  	  <th class="col-xs-6">送料</th>
+  	  <td><%= @order.postage %>円</td>
+  	</table>
+  	<table class="table amount-billed">
+  	  <th class="col-xs-6">請求金額合計</th>
+  	  <td><%= (@total_price.to_i + @order.postage.to_i).to_s(:delimited) %>円</td>
+  	</table>
+
+    </div>
+  </div>

@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="a">
+    <div class="b"><img class="c" src="assets/cake.jpg">
+
+
+
+    <div class="new-items">
+      <% @active_items.each.with_index(1) do |item| %>
+      <div class="new-item">
+        <div class="hover-parent">
+          <%= link_to item_path(item) do %>
+            <%= attachment_image_tag item, :image, :fill, 250, 175, fallback: "noimage.jpg" %>
+          <% end %>
+          <div class="hover-mask">
+            <%= link_to item_path(item), class:"item-link" do %>
+            <p>
+              <%= item.name %><br />
+              ¥<%= (item.price * 1.1).round %>(税込)
+            </p>
+            <% end %>
+          </div>
+        </div>
+        <div class="new">NEW</div>
+      </div>
+      <% end %>
+    </div>
+
+    <%= link_to "全ての商品を見る", items_path, class:"btn btn-outline-secondary" %>
+
+  </div>
+</div>

@@ -1,0 +1,52 @@
+<div class="container mt-5">
+  <div class="row">
+	<div class="col-lg-12">
+
+  	<h4 class="title">配送先登録/一覧</h4>
+
+  	   <%= form_with model:@delivery, local: true do |f| %>
+  	    <%= render 'layouts/error_messages', model: f.object %>
+        <table class="table">
+    	    <tr>
+            <th><%= f.label :郵便番号, "郵便番号(ハイフンなし)", class:"col-form-label" %></th>
+      	    <td><%= f.text_field :postcode, :placeholder => "半角数字,ハイフン無し", class:"form-control" %></td>
+  	     	</tr>
+  		    <tr>
+      	    <th><%= f.label :住所, class:"col-form-label" %></th>
+      	    <td><%= f.text_field :address, :placeholder => "東京都渋谷区代々木神園長0-0", :size=>"40x10", class:"form-control" %></td>
+  		    </tr>
+  		    <tr>
+      	    <th><%= f.label :宛名, class:"col-form-label" %></th>
+            <td><%= f.text_field :name, :placeholder => "令和道子", class:"form-control" %></td>
+            <td><%= f.submit "新規登録", class: "btn btn-success" %></td>
+  	     	</tr>
+		    </table>
+    	<% end %>
+
+    <table class="table table-bordered" >
+    	<thead>
+          <tr class="table-active">
+            <th style="width:10%;">郵便番号</th>
+            <th style="width:40%;">住所</th>
+            <th style="width:15%;">宛名</th>
+            <th style="width:30%;"></th>
+      	  </tr>
+    	</thead>
+        <tbody>
+
+    	<% @deliveries.each do |delivery| %>
+          <tr>
+            <td>〒<%= delivery.postcode %></td>
+            <td><%= delivery.address %></td>
+            <td><%= delivery.name %></td>
+            <td class="text-center">
+              <%= link_to "編集する", edit_delivery_path(delivery), class: "btn btn-success" %>
+              <%= link_to "削除する", delivery_path(delivery), method: :delete, class: "btn btn-danger" %>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+	</div>
+  </div>
+</div>

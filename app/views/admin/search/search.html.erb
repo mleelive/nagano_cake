@@ -1,0 +1,90 @@
+<% if @model == 'customer' %>
+
+  <div class="container">
+	<h3>Customers search for "<%= @content %>"</h3>
+  <div class="row mt-5">
+    <div class="col">
+      <h3 class="bg-light text-center" style="width:150px">会員一覧</h3>
+
+      <table class="table mt-5">
+        <thead class="thead-light">
+          <tr>
+            <th>会員ID</th>
+            <th>氏名</th>
+            <th>メールアドレス</th>
+            <th>ステータス</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @records.each do |customer| %>
+          <tr>
+            <td><%= customer.id %></td>
+            <td>
+              <%= link_to admin_customer_path(customer) do %>
+                <%= customer.full_name %>
+              <% end %>
+            </td>
+            <td><%= customer.email %></td>
+            <% if customer.is_deleted == true %>
+              <td class="text-muted">退会</td>
+            <% else %>
+              <td class="text-success">有効</td>
+            <% end %>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</div>
+<% elsif @model == 'item' %>
+	<h3>Items search for "<%= @content %>"</h3>
+<div class="container">
+
+<div style="position:absolute; top: 120px; right: 120px;">
+	 <%= link_to new_admin_item_path do %>
+		<div class="fas fa-plus-circle fa-3x"></div>
+	 <% end %>
+	 </div>
+
+  <div class='row mt-5'>
+    <div class='col'>
+      <h3 class="bg-light text-center" style="width:150px" >商品一覧</h3>
+       <table class="table mt-5">
+        <thead class="thead-light">
+         <tr class="table-light">
+           <th>商品ID</th>
+           <th>商品名</th>
+           <th>税抜価格</th>
+           <th>ジャンル</th>
+           <th>ステータス</th>
+         </tr>
+        </thead>
+        <tbody>
+        <% @records.each do |item| %>
+         <tr>
+           <td><%= item.id %></td>
+           <td>
+             <%= link_to admin_item_path(item.id) do %>
+             <%= item.name %>
+             <% end %>
+           </td>
+           <td><%= item.price.to_s(:delimited) %></td>
+           <td><%= item.category.name %></td>
+           <td>
+           <% if item.is_active? %>
+            <p class="text-success">販売中</p>
+           <% else %>
+            <p class="text-secondary">販売停止中</p>
+           <% end %>
+          </td>
+        </tr>
+       <% end %>
+       </tbody>
+     </table>
+   </div>
+  </div>
+</div>
+
+<% end %>

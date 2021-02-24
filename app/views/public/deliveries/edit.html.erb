@@ -1,0 +1,29 @@
+<div class="container mt-5">
+  <div class="row">
+	<div class="col-lg-12">
+	  <h3 class="Menu">配送先編集</h3>
+	    <div class="row">
+
+	      <%= form_with model:@delivery, local: true do |f| %>
+	      <%= render 'layouts/error_messages', model: f.object %>
+
+		  <table class="table">
+		  	<tr>
+		      <th><%= f.label :郵便番号, "郵便番号(ハイフンなし)", class:"col-form-label"%></th>
+		      <td><%= f.text_field :postcode, class:"form-control" %></td>
+			</tr>
+			<tr>
+		      <th><%= f.label :住所, class:"col-form-label" %></th>
+		      <td><%= f.text_field :address, :size=>"40x10", class:"form-control" %></td>
+			</tr>
+			<tr>
+		      <th><%= f.label :宛名, class:"col-form-label" %></th>
+		      <td><%= f.text_field :name, class:"form-control" %></td>
+		      <td><%= f.submit "変更内容を保存", class: "btn btn-success form-control" %></td>
+			</tr>
+	      </table>
+	      <% end %>
+		</div>
+    </div>
+  </div>
+</div>
